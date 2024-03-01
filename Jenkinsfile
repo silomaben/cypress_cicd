@@ -10,6 +10,11 @@ pipeline{
     //     ansiColor('xterm')
     // }
 
+    options {
+    buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10'))
+}
+
+
     stages {
         stage('Checkout Code') {
             steps {
@@ -33,6 +38,7 @@ pipeline{
 
         stage('Run Cypress Tests') {
             steps {
+                bat "mkdir cypress\\reports"
                 bat 'npx cypress run --browser chrome' // Use 'bat' for Windows command
             }
         }
