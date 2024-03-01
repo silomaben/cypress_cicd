@@ -49,6 +49,7 @@ pipeline{
                 [
                     allowMissing: false,
                     alwaysLinkToLastBuild: false, 
+                    includes: '**/*.png', 
                     keepAll: true, 
                     reportDir: 'cypress/reports',
                     reportFiles: 'index.html',
