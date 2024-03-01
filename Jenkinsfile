@@ -24,6 +24,15 @@ pipeline{
             }
         }
 
+        stage('Connect to VPN') {
+            steps {
+                script {
+                    // Replace 'vpn-server', 'username', and 'password' with your actual VPN server details
+                    sh 'sudo openconnect --user=username --password=password vpn-server'
+                }
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 bat 'npm install' // Use 'bat' for Windows command
