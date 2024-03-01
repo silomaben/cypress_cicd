@@ -60,7 +60,9 @@ pipeline{
             //     ]
             // )
 
-            archiveArtifacts 'cypress/reports/index.html'
+            // archiveArtifacts 'cypress/reports/index.html'
+            archiveArtifacts artifacts: 'cypress/reports/**', allowEmptyArchive: true
+
         }
     }
 }
