@@ -33,7 +33,7 @@ pipeline{
 
         stage('Run Cypress Tests') {
             steps {
-                bat 'npx cypress run --broeser ${BROWSER} --spec ${SPEC}' // Use 'bat' for Windows command
+                bat 'npx cypress run --browser ${BROWSER} --spec ${SPEC}' // Use 'bat' for Windows command
             }
         }
        
