@@ -38,7 +38,6 @@ pipeline{
 
         stage('Run Cypress Tests') {
             steps {
-                bat "mkdir cypress\\reports"
                 bat 'npx cypress run --browser chrome' // Use 'bat' for Windows command
             }
         }
