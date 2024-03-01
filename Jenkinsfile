@@ -42,12 +42,23 @@ pipeline{
                 bat 'npx cypress run --browser chrome' // Use 'bat' for Windows command
             }
         }
-       
     }
 
     post{
         always{
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'cypress/reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+            publishHTML(
+                [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false, 
+                    keepAll: true, 
+                    reportDir: 'cypress/reports',
+                    reportFiles: 'index.html',
+                    reportName: 'HTML Report', 
+                    reportTitles: '',
+                    useWrapperFileDirectly: true
+                    
+                ]
+            )
         }
-        }
+    }
 }
