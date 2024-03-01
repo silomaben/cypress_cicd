@@ -6,9 +6,9 @@ pipeline{
         choice(name: 'BROWSER', choices:['chrome','edge'], description: "Choose browser to run scripts")
     }
 
-    options{
-        ansiColor('xterm')
-    }
+    // options{
+    //     ansiColor('xterm')
+    // }
 
     stages {
         stage('Checkout Code') {
@@ -43,5 +43,5 @@ pipeline{
         always{
             publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'cypress/reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
         }
-    }
+        }
 }
