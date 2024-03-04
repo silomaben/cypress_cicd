@@ -40,36 +40,26 @@ pipeline{
         }
         
         stage('Run UI') {
-            steps {
-                bat 'ng serve' // Use 'bat' for Windows command
+            parallel{
+                steps {
+                        bat 'ng serve' // Use 'bat' for Windows command
+                    }
+
+                steps {
+                    bat 'npx cypress run --browser chrome' // Use 'bat' for Windows command
+                }
+
             }
+            
         }
 
-        stage('Run Cypress Tests') {
-            steps {
-                bat 'npx cypress run --browser chrome' // Use 'bat' for Windows command
-            }
-        }
+        // stage('Run Cypress Tests') {
+            
+        // }
     }
 
     post{
         always{
-            // publishHTML(
-            //     [
-            //         allowMissing: false,
-            //         alwaysLinkToLastBuild: false, 
-            //         includes: '**/*.png', 
-            //         keepAll: true, 
-            //         reportDir: 'cypress/reports',
-            //         reportFiles: 'index.html',
-            //         reportName: 'HTML Report', 
-            //         reportTitles: '',
-            //         useWrapperFileDirectly: true
-                    
-            //     ]
-            // )
-
-            // archiveArtifacts 'cypress/reports/index.html'
             archiveArtifacts artifacts: 'cypress/reports/**', allowEmptyArchive: true
 
         }
