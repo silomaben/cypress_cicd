@@ -125,7 +125,7 @@ pipeline {
                 if (fileExists('C:\\Users\\kben\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\JituTest\\cypress\\reports\\html\\index.html')) {
                     echo "Report file found. Killing the UI process."
                     // Kill the UI process
-                    bat 'taskkill /F /PID $uiProcess'
+                    // bat 'taskkill /F /PID $uiProcess'
                 } else {
                     echo "Report file not found. UI process continues."
                 }
