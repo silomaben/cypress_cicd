@@ -39,11 +39,11 @@ pipeline{
             }
         }
         
-        // stage('Run UI') {
-        //     steps {
-        //         bat 'ng serve --no-interactive' // Use 'bat' for Windows command
-        //     }
-        // }
+        stage('Run UI') {
+            steps {
+                bat 'ng serve --no-interactive' // Use 'bat' for Windows command
+            }
+        }
 
         stage('Run Cypress Tests') {
             steps {
