@@ -92,26 +92,17 @@ pipeline {
                 stage('Run UI') {
                     steps {
                        script {
-                            // Run UI and store the process ID
-                            def uiProcess = bat(script: 'start /B ng serve', returnStatus: true)
-                            // echo "UI Process ID: $uiProcess"
-                            // timeout(time: 15, unit: 'MINUTES') {
-                            //     // Wait for a reasonable time
-                            //     // Your other UI-related steps here
-                            // }
-
-                            // // After the timeout, kill the UI process
-                            // echo "Killing UI process after timeout"
-                            // bat "taskkill /F /PID $uiProcess"
+                            
+                            bat(script: 'start /B ng serve', returnStatus: true)
+                           
                         }
                     }
                 }
                 stage('Run Cypress Tests') {
                     steps {
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             // Run Cypress Tests
                             bat 'npx cypress run --browser chrome' // Use 'bat' for Windows command
-                        }
+                        
                     }
                 }
             }
@@ -120,16 +111,16 @@ pipeline {
 
     post {
         always {
-            script {
-                // Check if the report file exists
-                if (fileExists('C:\\Users\\kben\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\JituTest\\cypress\\reports\\html\\index.html')) {
-                    echo "Report file found. Killing the UI process."
-                    // Kill the UI process
-                    // bat 'taskkill /F /PID $uiProcess'
-                } else {
-                    echo "Report file not found. UI process continues."
-                }
-            }
+            // script {
+            //     // Check if the report file exists
+            //     if (fileExists('C:\\Users\\kben\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\JituTest\\cypress\\reports\\html\\index.html')) {
+            //         echo "Report file found. Killing the UI process."
+            //         // Kill the UI process
+            //         // bat 'taskkill /F /PID $uiProcess'
+            //     } else {
+            //         echo "Report file not found. UI process continues."
+            //     }
+            // }
             archiveArtifacts artifacts: 'cypress/reports/**', allowEmptyArchive: true
         }
     }
