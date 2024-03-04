@@ -24,14 +24,14 @@ pipeline{
             }
         }
 
-        stage('Connect to VPN') {
-            steps {
-                script {
-                    // Replace 'vpn-server', 'username', and 'password' with your actual VPN server details
-                    sh 'sudo openconnect --user=benard.masikonde --password=Sikumbuki01@! benard.masikonde@aws-vpn.cerebriai.com'
-                }
-            }
-        }
+        // stage('Connect to VPN') {
+        //     steps {
+        //         script {
+        //             // Replace 'vpn-server', 'username', and 'password' with your actual VPN server details
+        //             sh 'sudo openconnect --user=benard.masikonde --password=Sikumbuki01@! benard.masikonde@aws-vpn.cerebriai.com'
+        //         }
+        //     }
+        // }
 
         stage('Install Dependencies') {
             steps {
