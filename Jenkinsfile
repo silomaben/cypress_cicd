@@ -41,7 +41,7 @@ pipeline{
         
         stage('Run UI') {
             steps {
-                bat 'ng serve --no-interactive' // Use 'bat' for Windows command
+                bat 'ng serve' // Use 'bat' for Windows command
             }
         }
 
