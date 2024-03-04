@@ -94,15 +94,15 @@ pipeline {
                        script {
                             // Run UI and store the process ID
                             def uiProcess = bat(script: 'start /B ng serve', returnStatus: true)
-                            echo "UI Process ID: $uiProcess"
-                            timeout(time: 15, unit: 'MINUTES') {
-                                // Wait for a reasonable time
-                                // Your other UI-related steps here
-                            }
+                            // echo "UI Process ID: $uiProcess"
+                            // timeout(time: 15, unit: 'MINUTES') {
+                            //     // Wait for a reasonable time
+                            //     // Your other UI-related steps here
+                            // }
 
-                            // After the timeout, kill the UI process
-                            echo "Killing UI process after timeout"
-                            bat "taskkill /F /PID $uiProcess"
+                            // // After the timeout, kill the UI process
+                            // echo "Killing UI process after timeout"
+                            // bat "taskkill /F /PID $uiProcess"
                         }
                     }
                 }
