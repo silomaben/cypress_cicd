@@ -24,8 +24,6 @@ pipeline {
             }
         }
 
-
-
         stage('Run UI and Cypress Tests in Parallel') {
             parallel {
                 stage('Run UI') {
