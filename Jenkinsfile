@@ -24,7 +24,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh "sudo npm install" 
+                sh "npm install" 
             }
         }
 
