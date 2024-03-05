@@ -1,6 +1,10 @@
 
 pipeline {
-    agent any
+    agent {
+        node {
+            label 'alpha'
+        }
+    }
 
     parameters {
         choice(name: 'BROWSER', choices:['chrome','edge'], description: "Choose browser to run scripts")
