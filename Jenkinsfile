@@ -1,3 +1,4 @@
+
 pipeline {
     agent {
         node {
@@ -9,20 +10,19 @@ pipeline {
         choice(name: 'BROWSER', choices:['chrome','edge'], description: "Choose browser to run scripts")
     }
 
+
     stages {
         stage('Checkout Code') {
             steps {
-                script {
-                    // Checkout code using 'sh' for cross-platform compatibility
-                    sh 'git branch: main --credentials 9e708a8d-c1d1-4a8a-9632-3b31ad932908 https://github.com/silomaben/cypress_cicd.git'
-                }
+                git branch: 'main',
+                    credentialsId: '9e708a8d-c1d1-4a8a-9632-3b31ad932908',
+                    url: 'https://github.com/silomaben/cypress_cicd.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                // Use 'sh' for running shell commands
-                sh 'npm install'
+                sh 'npm install' 
             }
         }
 
@@ -30,18 +30,21 @@ pipeline {
             parallel {
                 stage('Run UI') {
                     steps {
-                        script {
+                       script {
                             // run the UI
-                            sh 'start /B ng serve' // You may need to adjust this based on your specific command
+                            sh(script: 'start /B ng serve', returnStatus: true)
+                           
                         }
                     }
                 }
                 stage('Run Cypress Tests') {
                     steps {
-                        // Run Cypress Tests using 'sh'
-                        sh "npx cypress run --browser ${params.BROWSER}"
+                            // Run Cypress Tests
+                            sh "npx cypress run --browser ${params.BROWSER}" // Use 'bat' for Windows command
+                        
                     }
                 }
+
 
                 stage('Deploy') {
                     steps {
@@ -50,6 +53,7 @@ pipeline {
                             def branchName = env.BRANCH_NAME
                             echo "Branch Name: ${branchName}"
 
+
                             // Decide which environment to deploy based on the branch name
                             if (branchName == 'main') {
                                 echo "deploying to production"
@@ -57,6 +61,7 @@ pipeline {
                                 echo "deploying to development now"
                             } else if(branchName == 'QA') {
                                 echo "deploying to QA now"
+
                             }
                         }
                     }
