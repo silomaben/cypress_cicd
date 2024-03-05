@@ -47,6 +47,8 @@ pipeline {
                         script {
                             // Determine the branch name
                             def branchName = env.BRANCH_NAME
+                            echo "Branch Name: ${branchName}"
+
 
                             // Decide which environment to deploy based on the branch name
                             if (branchName == 'main') {
