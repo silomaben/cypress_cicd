@@ -10,6 +10,7 @@ pipeline {
         choice(name: 'BROWSER', choices:['chrome','edge'], description: "Choose browser to run scripts")
     }
 
+    tools{nodejs 'node20.11'}
 
     stages {
         stage('Checkout Code') {
