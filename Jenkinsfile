@@ -21,6 +21,7 @@ pipeline {
                 bat 'npm install' 
             }
         }
+        
 
         stage('Run UI and Cypress Tests in Parallel') {
             parallel {
