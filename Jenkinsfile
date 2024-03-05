@@ -24,11 +24,11 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh "npm install" 
+                sh "sudo npm install" 
             }
         }
 
-        
+
         stage('Run UI and Cypress Tests in Parallel') {
             parallel {
                 stage('Run UI') {
