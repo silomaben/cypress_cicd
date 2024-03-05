@@ -6,9 +6,6 @@ pipeline {
         choice(name: 'BROWSER', choices:['chrome','edge'], description: "Choose browser to run scripts")
     }
 
-    // options {
-    //     buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10'))
-    // }
 
     stages {
         stage('Checkout Code') {
@@ -41,6 +38,25 @@ pipeline {
                             // Run Cypress Tests
                             bat "npx cypress run --browser ${params.BROWSER}" // Use 'bat' for Windows command
                         
+                    }
+                }
+
+
+                stage('Deploy') {
+                    steps {
+                        script {
+                            // Determine the branch name
+                            def branchName = env.BRANCH_NAME
+
+                            // Decide which environment to deploy based on the branch name
+                            if (branchName == 'main') {
+                                echo "deploying to production"
+                            } else if(branchName == 'dev') {
+                                echo "deploying to development"
+                            } else if(branchName == 'QA') {
+                                echo "deploying to QA"
+                            }
+                        }
                     }
                 }
             }
