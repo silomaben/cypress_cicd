@@ -56,7 +56,8 @@ pipeline {
                             } else if(branchName == 'dev') {
                                 echo "deploying to development"
                             } else if(branchName == 'QA') {
-                                echo "deploying to QA"
+                                echo "deploying to  QA"
+
                             }
                         }
                     }
