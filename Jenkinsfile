@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main',
+                git branch: 'dev',
                     credentialsId: '9e708a8d-c1d1-4a8a-9632-3b31ad932908',
                     url: 'https://github.com/silomaben/cypress_cicd.git'
             }
@@ -37,7 +37,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install' 
+                sh "npm install" 
             }
         }
 
