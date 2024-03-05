@@ -20,6 +20,21 @@ pipeline {
             }
         }
 
+         stage('Check npm Installation') {
+            steps {
+                script {
+                    def npmExecutable = sh(script: 'which npm', returnStatus: true).trim()
+                    
+                    if (npmExecutable == 0) {
+                        echo 'npm is installed'
+                    } else {
+                        error 'npm is not installed'
+                    }
+                }
+            }
+        }
+
+
         stage('Install Dependencies') {
             steps {
                 sh 'npm install' 
