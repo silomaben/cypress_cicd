@@ -1,12 +1,16 @@
 
 pipeline {
-    agent any
+    agent {
+        node {
+            label 'alpha'
+        }
+    }
 
     parameters {
         choice(name: 'BROWSER', choices:['chrome','edge'], description: "Choose browser to run scripts")
     }
 
-    // tools{nodejs 'node20.11'}
+    tools{nodejs 'node20.11'}
 
     stages {
         stage('Checkout Code') {
@@ -20,9 +24,11 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                bat "npm install" 
+                sh "npm install" 
             }
         }
+        
+
 
         stage('Run UI and Cypress Tests in Parallel') {
             parallel {
@@ -30,7 +36,7 @@ pipeline {
                     steps {
                        script {
                             // run the UI
-                            bat(script: 'start /B ng serve', returnStatus: true)
+                            sh(script: 'start /B ng serve', returnStatus: true)
                            
                         }
                     }
@@ -38,7 +44,7 @@ pipeline {
                 stage('Run Cypress Tests') {
                     steps {
                             // Run Cypress Tests
-                            bat "npx cypress run --browser ${params.BROWSER}" // Use 'bat' for Windows command
+                            sh "npx cypress run --browser ${params.BROWSER}" // Use 'bat' for Windows command
                         
                     }
                 }
