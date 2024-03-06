@@ -32,7 +32,7 @@ pipeline {
         
 
 
-        stage('Run UI and Cypress Tests in Parallel') {
+        
               stage('Run UI') {
                     steps {
                        script {
@@ -75,7 +75,7 @@ pipeline {
                         }
                     }
                 }
-        }
+        
     }
 
     post {
