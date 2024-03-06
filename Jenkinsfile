@@ -37,7 +37,7 @@ pipeline {
                 stage('Run UI') {
                     steps {
                        script {
-                            sh"cd /home/jenkins/workspace/Cypress_Deploy_dev/.xvfb-43 && ls -l"
+                            sh"cd /home/jenkins/workspace/Cypress_Deploy_dev/ && ls -l"
                             
                             sh(script: 'nohup ng serve &', returnStatus: true)
                            
