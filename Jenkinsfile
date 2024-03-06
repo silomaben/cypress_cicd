@@ -33,8 +33,7 @@ pipeline {
 
 
         stage('Run UI and Cypress Tests in Parallel') {
-            parallel {
-                stage('Run UI') {
+              stage('Run UI') {
                     steps {
                        script {
                             sh"cd /home/jenkins/workspace/Cypress_Deploy_dev/ && ls -al"
@@ -45,6 +44,7 @@ pipeline {
                         }
                     }
                 }
+
                 stage('Run Cypress Tests') {
                     steps {
                         wrap([$class: 'Xvfb']) {
@@ -54,9 +54,8 @@ pipeline {
                         }
                     }
                 }
-
-
-                stage('Deploy') {
+         
+            stage('Deploy') {
                     steps {
                         script {
                             // Determine the branch name
@@ -76,7 +75,6 @@ pipeline {
                         }
                     }
                 }
-            }
         }
     }
 
