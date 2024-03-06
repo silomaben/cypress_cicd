@@ -44,9 +44,7 @@ pipeline {
                 }
                 stage('Run Cypress Tests') {
                     steps {
-                            // Install Xvfb
-                            sh 'apt-get install -y xvfb'
-
+                            
                             // Run Cypress Tests
                             sh "xvfb-run npx cypress run --browser ${params.BROWSER}" // Use 'bat' for Windows command
                         
