@@ -27,6 +27,8 @@ pipeline {
         // Use 'dir' to change the working directory
         dir('/home/jenkins/workspace/Cypress_Deploy_dev') {
             // Use 'withEnv' to set environment variables
+            sh "/home/jenkins/workspace/Cypress_Deploy_dev/node_modules/cypress"
+            sh "ls -ld */"
             
                 // Your existing pipeline steps, including npm install
                 sh 'npm install'
