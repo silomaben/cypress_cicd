@@ -25,7 +25,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
 
-                withEnv(['TMPDIR': '/home/jenkins/tmp']) {
+                withEnv(['TMPDIR': '/home/jenkins/workspace/Cypress_Deploy_dev']) {
                 // Your existing pipeline steps, including npm install
                 sh 'npm install'
             }
