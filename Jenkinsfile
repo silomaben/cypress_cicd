@@ -45,7 +45,6 @@ pipeline {
                 stage('Run Cypress Tests') {
                     steps {
                             // Install Xvfb
-                            sh 'apt-get update'
                             sh 'apt-get install -y xvfb'
 
                             // Run Cypress Tests
