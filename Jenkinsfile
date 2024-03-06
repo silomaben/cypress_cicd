@@ -24,14 +24,11 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'pwd'
-                sh 'ls -ld */'
-                sh 'cd ..'
-                sh 'pwd'
-                sh 'ls -ld */'
 
-
-                sh "npm install" 
+                withEnv(['TMPDIR': '/home/jenkins/tmp']) {
+                // Your existing pipeline steps, including npm install
+                sh 'npm install'
+            }
             }
         }
         
