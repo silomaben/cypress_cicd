@@ -22,32 +22,13 @@ pipeline {
         }
 
 
-  stage('Install Dependencies') {
-    steps {
-        // Use 'dir' to change the working directory
-        dir('/home/jenkins/workspace/Cypress_Deploy_dev') {
-            // Use 'withEnv' to set environment variables if needed
-            withEnv(['OVERRIDES_TMPDIR=/home/jenkins/workspace/Cypress_Deploy_dev']) {
-                // Print the current directory for debugging
-                sh 'pwd'
+        stage('Install Dependencies') {
+            steps {
                 
-                // Verify the content of the directory
-                sh 'ls -l'
-                
-                // Execute Cypress installation
-                sh 'npm install cypress'
-                
-                // Run Cypress binary
-                sh './node_modules/.bin/cypress'
-                
-                // Your other pipeline steps, including npm install if needed
-                sh 'npm install'
+                sh 'TMPDIR=/home/jenkins/workspace/Cypress_Deploy_dev/src npm install'
             }
         }
-    }
-}
-
-
+        
 
 
         stage('Run UI and Cypress Tests in Parallel') {
