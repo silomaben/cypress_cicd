@@ -2,6 +2,7 @@
 pipeline {
     agent {
         node {
+            
             label 'alpha'
         }
     }
@@ -44,10 +45,11 @@ pipeline {
                 }
                 stage('Run Cypress Tests') {
                     steps {
+                        wrap([$class: 'Xvfb']) {
                             
                             // Run Cypress Tests
                             sh "xvfb-run npx cypress run --browser ${params.BROWSER}" // Use 'bat' for Windows command
-                        
+                        }
                     }
                 }
 
