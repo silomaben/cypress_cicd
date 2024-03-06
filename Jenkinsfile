@@ -25,9 +25,10 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh 'pwd'
-                sh 'ls'
+                sh 'ls -ld */'
                 sh 'cd ..'
-                sh 'ls'
+                sh 'pwd'
+                sh 'ls -ld */'
 
 
                 sh "npm install" 
