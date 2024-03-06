@@ -7,11 +7,23 @@ pipeline {
     }
     stages{
         stage('Build Maven'){
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/dev']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/silomaben/cypress_cicd.git']]])
-                bat 'mvn clean install'
+            steps {
+                git branch: 'dev',
+                    credentialsId: '9e708a8d-c1d1-4a8a-9632-3b31ad932908',
+                    url: 'https://github.com/silomaben/cypress_cicd.git'
             }
         }
+
+        stage('Build and Package with Maven') {
+            steps {
+                // Use Docker image with Maven
+                docker.image('maven:latest').inside {
+                    // Run Maven commands
+                    sh 'mvn clean install'
+                }
+            }
+        }
+        
         stage('Build docker image'){
             steps{
                 script{
