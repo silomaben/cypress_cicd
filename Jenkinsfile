@@ -38,6 +38,7 @@ pipeline {
                     steps {
                        script {
                             sh"cd /home/jenkins/workspace/Cypress_Deploy_dev/ && ls -al"
+                            sh"npm install -g @angular/cli"
                             
                             sh(script: 'nohup ng serve &', returnStatus: true)
                            
