@@ -38,18 +38,18 @@ pipeline {
                     steps {
                        script {
                             // run the UI
-                            sh(script: 'start /B ng serve', returnStatus: true)
+                            sh(script: 'nohup ng serve &', returnStatus: true)
                            
                         }
                     }
                 }
                 stage('Run Cypress Tests') {
                     steps {
-                        wrap([$class: 'Xvfb']) {
+                        
                             
                             // Run Cypress Tests
-                            sh "xvfb-run npx cypress run --browser ${params.BROWSER}" // Use 'bat' for Windows command
-                        }
+                            sh "npx cypress run --browser ${params.BROWSER}" // Use 'bat' for Windows command
+                        
                     }
                 }
 
