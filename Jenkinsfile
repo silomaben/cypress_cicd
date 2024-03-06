@@ -1,82 +1,111 @@
 
-pipeline {
-    agent {
-        node {
-            label 'alpha'
-        }
-    }
+// pipeline {
+//     agent {
+//         node {
+//             label 'alpha'
+//         }
+//     }
 
-    parameters {
-        choice(name: 'BROWSER', choices:['chrome','edge'], description: "Choose browser to run scripts")
-    }
+//     parameters {
+//         choice(name: 'BROWSER', choices:['chrome','edge'], description: "Choose browser to run scripts")
+//     }
 
-    tools{nodejs 'node20.11'}
+//     tools{nodejs 'node20.11'}
 
-    stages {
-        stage('Checkout Code') {
-            steps {
-                git branch: 'dev',
-                    credentialsId: '9e708a8d-c1d1-4a8a-9632-3b31ad932908',
-                    url: 'https://github.com/silomaben/cypress_cicd.git'
-            }
-        }
+//     stages {
+//         stage('Checkout Code') {
+//             steps {
+//                 git branch: 'dev',
+//                     credentialsId: '9e708a8d-c1d1-4a8a-9632-3b31ad932908',
+//                     url: 'https://github.com/silomaben/cypress_cicd.git'
+//             }
+//         }
 
 
-        stage('Install Dependencies') {
-            steps {
-                sh "npm install" 
-            }
-        }
+//         stage('Install Dependencies') {
+//             steps {
+//                 sh "npm install" 
+//             }
+//         }
         
 
 
-        stage('Run UI and Cypress Tests in Parallel') {
-            parallel {
-                stage('Run UI') {
-                    steps {
-                       script {
-                            // run the UI
-                            sh(script: 'start /B ng serve', returnStatus: true)
+//         stage('Run UI and Cypress Tests in Parallel') {
+//             parallel {
+//                 stage('Run UI') {
+//                     steps {
+//                        script {
+//                             // run the UI
+//                             sh(script: 'start /B ng serve', returnStatus: true)
                            
-                        }
-                    }
-                }
-                stage('Run Cypress Tests') {
-                    steps {
-                            // Run Cypress Tests
-                            sh "npx cypress run --browser ${params.BROWSER}" // Use 'bat' for Windows command
+//                         }
+//                     }
+//                 }
+//                 stage('Run Cypress Tests') {
+//                     steps {
+//                             // Run Cypress Tests
+//                             sh "npx cypress run --browser ${params.BROWSER}" // Use 'bat' for Windows command
                         
-                    }
-                }
+//                     }
+//                 }
 
 
-                stage('Deploy') {
-                    steps {
-                        script {
-                            // Determine the branch name
-                            def branchName = env.BRANCH_NAME
-                            echo "Branch Name: ${branchName}"
+//                 stage('Deploy') {
+//                     steps {
+//                         script {
+//                             // Determine the branch name
+//                             def branchName = env.BRANCH_NAME
+//                             echo "Branch Name: ${branchName}"
 
 
-                            // Decide which environment to deploy based on the branch name
-                            if (branchName == 'main') {
-                                echo "deploying to production"
-                            } else if(branchName == 'dev') {
-                                echo "deploying to development now"
-                            } else if(branchName == 'QA') {
-                                echo "deploying to QA now"
+//                             // Decide which environment to deploy based on the branch name
+//                             if (branchName == 'main') {
+//                                 echo "deploying to production"
+//                             } else if(branchName == 'dev') {
+//                                 echo "deploying to development now"
+//                             } else if(branchName == 'QA') {
+//                                 echo "deploying to QA now"
 
-                            }
-                        }
-                    }
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+
+//     post {
+//         always {
+//             archiveArtifacts artifacts: 'cypress/reports/**', allowEmptyArchive: true
+//         }
+//     }
+// }
+
+
+pipeline {
+    agent any
+    tools{
+        maven 'maven_3_5_0'
+    }
+    stages{
+        stage('Build Maven'){
+            steps{
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Java-Techie-jt/devops-automation']]])
+                sh 'mvn clean install'
+            }
+        }
+        stage('Build docker image'){
+            steps{
+                script{
+                    sh """
+                    
+                    docker build -t angular-docker .
+                    docker run -p 4200:4200 angular-docker
+
+                    """
                 }
             }
         }
-    }
-
-    post {
-        always {
-            archiveArtifacts artifacts: 'cypress/reports/**', allowEmptyArchive: true
-        }
+        
     }
 }
