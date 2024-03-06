@@ -50,7 +50,7 @@ pipeline {
                         wrap([$class: 'Xvfb']) {
                             
                             // Run Cypress Tests
-                            sh "npx cypress run --browser ${params.BROWSER}" // Use 'bat' for Windows command
+                            sh "npx cypress open" // Use 'bat' for Windows command
                         }
                     }
                 }
